@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": 1780296667479,
+    "name": "Tinkismee",
+    "email": "tinhisme1@gmail.com",
+    "address": "TPHCM",
+    "passwordHash": "$2a$10$kTpNyPMSuonJR/4p./Jda.X1UoRYbQriglBod638AwbXhTPYzc3kq",
+    "role": "customer",
+    "createdAt": "2026-06-01T06:51:07.619Z"
+  }
+]

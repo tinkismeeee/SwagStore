@@ -1,1 +1,70 @@
-[]
+[
+  {
+    "id": "ORD-1780296747609",
+    "userId": 1780296667479,
+    "email": "tinhisme1@gmail.com",
+    "items": [
+      {
+        "product": {
+          "id": 1,
+          "name": "Sauce Labs Backpack",
+          "price": 29.99,
+          "image": "/images/backpack.svg",
+          "category": "Accessories",
+          "type": "Backpack",
+          "badge": "Bestseller",
+          "desc": "Carry your test scripts in style. Durable canvas, laptop sleeve, padded straps."
+        },
+        "qty": 1,
+        "subtotal": 29.99
+      }
+    ],
+    "total": 32.39,
+    "name": "Tinkismee",
+    "address": "TPHCM",
+    "placedAt": "13:52:27 1/6/2026",
+    "createdAt": "2026-06-01T06:52:27.685Z",
+    "status": "confirmed"
+  },
+  {
+    "id": "ORD-1780296829915",
+    "userId": 1780296667479,
+    "email": "tinhisme1@gmail.com",
+    "items": [
+      {
+        "product": {
+          "id": 3,
+          "name": "Sauce Labs Bolt T-Shirt",
+          "price": 15.99,
+          "image": "/images/bolt-shirt.svg",
+          "category": "Apparel",
+          "type": "T-Shirt",
+          "badge": "New",
+          "desc": "Get your testing power on. Super-soft 100% polyester, wrinkle-free."
+        },
+        "qty": 1,
+        "subtotal": 15.99
+      },
+      {
+        "product": {
+          "id": 4,
+          "name": "Sauce Labs Fleece Jacket",
+          "price": 49.99,
+          "image": "/images/fleece-jacket.svg",
+          "category": "Apparel",
+          "type": "Fleece Jacket",
+          "badge": null,
+          "desc": "Mid-layer warmth. 100% polyester micro-fleece jacket – perfect for outdoor testing."
+        },
+        "qty": 1,
+        "subtotal": 49.99
+      }
+    ],
+    "total": 71.26,
+    "name": "Tinkismee",
+    "address": "TPHCM",
+    "placedAt": "13:53:49 1/6/2026",
+    "createdAt": "2026-06-01T06:53:49.915Z",
+    "status": "confirmed"
+  }
+]
