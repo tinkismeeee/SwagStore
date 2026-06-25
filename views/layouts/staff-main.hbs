@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff Panel — SwagStore</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="staff-body">
+  <nav class="staff-nav">
+    <div class="staff-nav-inner">
+      <a href="/staff/dashboard" class="staff-brand">
+        <span class="brand-icon">⬡</span>
+        <span>SwagStore <span class="staff-badge">Staff</span></span>
+      </a>
+      <div class="staff-nav-links">
+        <a href="/staff/dashboard" class="staff-nav-link">Dashboard</a>
+        <a href="/staff/products" class="staff-nav-link">Products</a>
+        <a href="/staff/customers" class="staff-nav-link">Customers</a>
+        <a href="/" class="staff-nav-link" target="_blank">View Shop</a>
+        <span class="staff-user">{{user.name}}</span>
+        <a href="/staff/logout" class="staff-nav-link staff-logout">Logout</a>
+      </div>
+    </div>
+  </nav>
+  <main class="staff-main">
+    {{{body}}}
+  </main>
+</body>
+</html>

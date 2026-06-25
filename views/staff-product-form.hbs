@@ -1,0 +1,101 @@
+﻿<div class="staff-dashboard">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-orders">📦</div>
+      <div class="stat-body">
+        <p class="stat-value">{{stats.totalOrders}}</p>
+        <p class="stat-label">Total Orders</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-revenue">💰</div>
+      <div class="stat-body">
+        <p class="stat-value">${{stats.totalRevenue}}</p>
+        <p class="stat-label">Total Revenue</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-customers">👥</div>
+      <div class="stat-body">
+        <p class="stat-value">{{stats.totalCustomers}}</p>
+        <p class="stat-label">Customers</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-products">🏷️</div>
+      <div class="stat-body">
+        <p class="stat-value">{{stats.totalProducts}}</p>
+        <p class="stat-label">Products</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="orders-section">
+    <div class="section-header">
+      <h2 class="section-title">{{#if product}}Edit Product{{else}}Add Product{{/if}}</h2>
+      <a href="/staff/products" class="btn-sm btn-edit">← Back</a>
+    </div>
+
+    <div class="form-page">
+      <form method="POST" action="{{#if product}}/staff/products/edit/{{product.id}}{{else}}/staff/products/add{{/if}}" class="staff-form">
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Name *</label>
+            <input class="form-input" type="text" name="name" value="{{product.name}}" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Price *</label>
+            <input class="form-input" type="number" step="0.01" min="0" name="price" value="{{product.price}}" required>
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Category *</label>
+            <select class="form-input" name="category" required>
+              <option value="">Select category</option>
+              {{#each categories}}
+              <option value="{{this}}" {{#if (eq this ../product.category)}}selected{{/if}}>{{this}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Type *</label>
+            <select class="form-input" name="type" required>
+              <option value="">Select type</option>
+              {{#each types}}
+              <option value="{{this}}" {{#if (eq this ../product.type)}}selected{{/if}}>{{this}}</option>
+              {{/each}}
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Image URL</label>
+          <input class="form-input" type="text" name="image" value="{{product.image}}" placeholder="/images/backpack.svg">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Badge</label>
+          <select class="form-input" name="badge">
+            <option value="">None</option>
+            <option value="Bestseller" {{#if (eq product.badge 'Bestseller')}}selected{{/if}}>Bestseller</option>
+            <option value="New" {{#if (eq product.badge 'New')}}selected{{/if}}>New</option>
+            <option value="Sale" {{#if (eq product.badge 'Sale')}}selected{{/if}}>Sale</option>
+            <option value="Limited" {{#if (eq product.badge 'Limited')}}selected{{/if}}>Limited</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Description *</label>
+          <textarea class="form-input form-textarea" name="desc" rows="3" required>{{product.desc}}</textarea>
+        </div>
+
+        <div class="form-actions">
+          <a href="/staff/products" class="btn-sm btn-edit">Cancel</a>
+          <button type="submit" class="btn-primary">{{#if product}}Update Product{{else}}Add Product{{/if}}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

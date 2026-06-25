@@ -1,0 +1,90 @@
+﻿<div class="staff-dashboard">
+  {{! ── Stats Grid ── }}
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-orders">📦</div>
+      <div class="stat-body">
+        <p class="stat-value">{{stats.totalOrders}}</p>
+        <p class="stat-label">Total Orders</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-revenue">💰</div>
+      <div class="stat-body">
+        <p class="stat-value">${{stats.totalRevenue}}</p>
+        <p class="stat-label">Total Revenue</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-customers">👥</div>
+      <div class="stat-body">
+        <p class="stat-value">{{stats.totalCustomers}}</p>
+        <p class="stat-label">Customers</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-products">🏷️</div>
+      <div class="stat-body">
+        <p class="stat-value">{{stats.totalProducts}}</p>
+        <p class="stat-label">Products</p>
+      </div>
+    </div>
+  </div>
+
+  {{! ── Alerts ── }}
+  {{#if success}}
+  <div class="alert alert-success">{{#if (eq success 'added')}}Customer added successfully.{{/if}}{{#if (eq success 'edited')}}Customer updated successfully.{{/if}}{{#if (eq success 'deleted')}}Customer deleted successfully.{{/if}}</div>
+  {{/if}}
+  {{#if error}}
+  <div class="alert alert-error">{{#if (eq error '1')}}Please fill in all required fields.{{/if}}{{#if (eq error 'notfound')}}Customer not found.{{/if}}{{error}}</div>
+  {{/if}}
+
+  {{! ── Customers Section ── }}
+  <div class="orders-section">
+    <div class="section-header">
+      <h2 class="section-title">Customer Management</h2>
+      <div class="section-header-actions">
+        <span class="section-count">{{customers.length}} customers</span>
+        <a href="/staff/customers/add" class="btn-add-entity">+ Add Customer</a>
+      </div>
+    </div>
+
+    <div class="staff-orders-table-wrap">
+      <table class="staff-orders-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Password Hash</th>
+            <th>Created</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each customers}}
+          <tr class="order-row">
+            <td class="order-id-cell">{{id}}</td>
+            <td class="product-name-cell">{{name}}</td>
+            <td>{{email}}</td>
+            <td class="muted" style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{address}}</td>
+            <td>
+              <code class="pw-hash" title="{{passwordHash}}">{{truncate passwordHash 20}}…</code>
+            </td>
+            <td class="order-date-cell">{{formatDate createdAt}}</td>
+            <td>
+              <div class="action-btns">
+                <a href="/staff/customers/edit/{{id}}" class="btn-sm btn-edit">Edit</a>
+                <form method="POST" action="/staff/customers/delete/{{id}}" onsubmit="return confirm('Delete customer {{name}}?')">
+                  <button type="submit" class="btn-sm btn-delete">Delete</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

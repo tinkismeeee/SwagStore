@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 const express    = require('express');
 const { engine } = require('express-handlebars');
 const path       = require('path');
@@ -20,8 +20,8 @@ function createApp() {
       gt:         (a, b) => a > b,
       add:        (a, b) => +(a + b).toFixed(2),
       currency:   v      => '$' + Number(v).toFixed(2),
-      times:      (a, b) => +(a * b).toFixed(2),
-      formatDate: d      => d ? new Date(d).toLocaleDateString('vi-VN') : '',
+      times:      (a, b) => +(a * b).toFixed(2),      formatDate: d      => d ? new Date(d).toLocaleDateString('vi-VN') : '',
+      truncate:   (s, n) => s && s.length > n ? s.slice(0, n) : s,
       badgeClass: badge  => {
         const map = { Bestseller:'badge-gold', New:'badge-teal', Sale:'badge-red', Limited:'badge-purple' };
         return map[badge] || 'badge-gray';
@@ -76,3 +76,5 @@ if (require.main === module) {
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => console.log(`\nSwagStore → http://localhost:${PORT}\n`));
 }
+
+

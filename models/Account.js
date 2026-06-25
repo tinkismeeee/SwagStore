@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 const fs     = require('fs');
 const path   = require('path');
@@ -9,7 +9,8 @@ const dataFile = path.join(__dirname, '..', 'data', 'accounts.json');
 function readAccounts() {
   try {
     const raw = fs.readFileSync(dataFile, 'utf8');
-    const accounts = raw ? JSON.parse(raw) : [];
+    const clean = (raw && raw.charCodeAt(0) === 0xFEFF) ? raw.slice(1) : raw;
+    const accounts = clean ? JSON.parse(clean) : [];
     return Array.isArray(accounts) ? accounts : [];
   } catch (_) {
     return [];
@@ -17,13 +18,16 @@ function readAccounts() {
 }
 
 function writeAccounts(accounts) {
-  const normalized = Array.isArray(accounts) ? accounts : [accounts];
-  fs.writeFileSync(dataFile, JSON.stringify(normalized, null, 2));
+  fs.writeFileSync(dataFile, JSON.stringify(accounts, null, 2), 'utf8');
 }
 
 class Account {
   static getAll() {
     return readAccounts();
+  }
+
+  static getCustomers() {
+    return Account.getAll().filter(a => a.role === 'customer');
   }
 
   static findByEmail(email) {
@@ -39,7 +43,6 @@ class Account {
   }
 
   static verifyPassword(password, hash) {
-    // support old sha256 hashes (hex, 64 chars) for backward compat
     if (/^[a-f0-9]{64}$/.test(hash)) {
       const crypto = require('crypto');
       return crypto.createHash('sha256').update(String(password)).digest('hex') === hash;
@@ -53,7 +56,7 @@ class Account {
     return Account.verifyPassword(password, user.passwordHash) ? user : null;
   }
 
-  static add({ name, email, password, address }) {
+  static add({ name, email, password, address, role }) {
     const normalizedEmail = String(email).trim().toLowerCase();
     if (!name || !normalizedEmail || !password || !address) {
       throw new Error('All fields are required.');
@@ -69,7 +72,7 @@ class Account {
       email:        normalizedEmail,
       address:      String(address).trim(),
       passwordHash: Account.hashPassword(password),
-      role:         'customer',
+      role:         role === 'staff' ? 'staff' : 'customer',
       createdAt:    new Date().toISOString(),
     };
     accounts.push(newAccount);
@@ -81,9 +84,31 @@ class Account {
     const accounts = Account.getAll();
     const idx = accounts.findIndex(a => String(a.id) === String(id));
     if (idx === -1) throw new Error('Account not found.');
+
+    if (fields.password) {
+      fields.passwordHash = Account.hashPassword(fields.password);
+      delete fields.password;
+    }
+    if (fields.email) {
+      fields.email = String(fields.email).trim().toLowerCase();
+    }
+
     accounts[idx] = { ...accounts[idx], ...fields, updatedAt: new Date().toISOString() };
     writeAccounts(accounts);
     return accounts[idx];
+  }
+
+  static resetPassword(id, newPassword) {
+    return Account.update(id, { password: newPassword });
+  }
+
+  static delete(id) {
+    const accounts = Account.getAll();
+    const idx = accounts.findIndex(a => String(a.id) === String(id));
+    if (idx === -1) throw new Error('Account not found.');
+    const removed = accounts.splice(idx, 1)[0];
+    writeAccounts(accounts);
+    return removed;
   }
 }
 

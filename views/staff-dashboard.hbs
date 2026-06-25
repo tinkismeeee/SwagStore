@@ -1,0 +1,94 @@
+﻿<div class="staff-dashboard">
+  {{! ── Stats Grid ── }}
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-orders">📦</div>
+      <div class="stat-body">
+        <p class="stat-value">{{stats.totalOrders}}</p>
+        <p class="stat-label">Total Orders</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-revenue">💰</div>
+      <div class="stat-body">
+        <p class="stat-value">${{stats.totalRevenue}}</p>
+        <p class="stat-label">Total Revenue</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-customers">👥</div>
+      <div class="stat-body">
+        <p class="stat-value">{{stats.totalCustomers}}</p>
+        <p class="stat-label">Customers</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-products">🏷️</div>
+      <div class="stat-body">
+        <p class="stat-value">{{stats.totalProducts}}</p>
+        <p class="stat-label">Products</p>
+      </div>
+    </div>
+  </div>
+
+  {{! ── Orders Section ── }}
+  <div class="orders-section" id="orders">
+    <div class="section-header">
+      <h2 class="section-title">All Orders</h2>
+      <span class="section-count">{{orders.length}} total</span>
+    </div>
+
+    {{#if orders.length}}
+    <div class="staff-orders-table-wrap">
+      <table class="staff-orders-table">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each orders}}
+          <tr class="order-row {{#if (eq id ../selectedOrder.id)}}order-row-selected{{/if}}">
+            <td class="order-id-cell">{{id}}</td>
+            <td>
+              <p class="order-customer-name">{{name}}</p>
+              <p class="order-customer-email">{{email}}</p>
+            </td>
+            <td>{{items.length}}</td>
+            <td class="order-total-cell">${{total}}</td>
+            <td class="order-date-cell">{{formatDate createdAt}}</td>
+            <td>
+              <span class="status-pill status-{{status}}">{{status}}</span>
+            </td>
+            <td>
+              <form method="POST" action="/staff/orders/status" class="status-form">
+                <input type="hidden" name="orderId" value="{{id}}">
+                <select name="status" class="status-select" onchange="this.form.submit()">
+                  <option value="confirmed"  {{#if (eq status 'confirmed')}}selected{{/if}}>Confirmed</option>
+                  <option value="processing" {{#if (eq status 'processing')}}selected{{/if}}>Processing</option>
+                  <option value="shipped"    {{#if (eq status 'shipped')}}selected{{/if}}>Shipped</option>
+                  <option value="delivered"  {{#if (eq status 'delivered')}}selected{{/if}}>Delivered</option>
+                  <option value="cancelled"  {{#if (eq status 'cancelled')}}selected{{/if}}>Cancelled</option>
+                </select>
+              </form>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+    {{else}}
+    <div class="empty-state">
+      <div class="empty-icon">📦</div>
+      <h1 class="empty-title">No orders yet</h1>
+      <p class="empty-sub">Orders will appear here once customers start purchasing.</p>
+    </div>
+    {{/if}}
+  </div>
+</div>

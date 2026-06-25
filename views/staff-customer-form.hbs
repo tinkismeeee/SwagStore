@@ -1,0 +1,86 @@
+﻿<div class="staff-dashboard">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-orders">📦</div>
+      <div class="stat-body">
+        <p class="stat-value">{{stats.totalOrders}}</p>
+        <p class="stat-label">Total Orders</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-revenue">💰</div>
+      <div class="stat-body">
+        <p class="stat-value">${{stats.totalRevenue}}</p>
+        <p class="stat-label">Total Revenue</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-customers">👥</div>
+      <div class="stat-body">
+        <p class="stat-value">{{stats.totalCustomers}}</p>
+        <p class="stat-label">Customers</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-products">🏷️</div>
+      <div class="stat-body">
+        <p class="stat-value">{{stats.totalProducts}}</p>
+        <p class="stat-label">Products</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="orders-section">
+    <div class="section-header">
+      <h2 class="section-title">{{#if customer}}Edit Customer{{else}}Add Customer{{/if}}</h2>
+      <a href="/staff/customers" class="btn-sm btn-edit">← Back</a>
+    </div>
+
+    <div class="form-page">
+      <form method="POST" action="{{#if customer}}/staff/customers/edit/{{customer.id}}{{else}}/staff/customers/add{{/if}}" class="staff-form">
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Name *</label>
+            <input class="form-input" type="text" name="name" value="{{customer.name}}" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email *</label>
+            <input class="form-input" type="email" name="email" value="{{customer.email}}" required>
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Password {{#if customer}}<span class="muted">(leave blank to keep)</span>{{/if}}*</label>
+            <input class="form-input" type="text" name="password" {{#unless customer}}required{{/unless}} placeholder="{{#if customer}}Enter new password{{else}}Password{{/if}}">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Role</label>
+            <select class="form-input" name="role">
+              <option value="customer" {{#if (eq customer.role 'customer')}}selected{{/if}}>Customer</option>
+              <option value="staff" {{#if (eq customer.role 'staff')}}selected{{/if}}>Staff</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Address *</label>
+          <input class="form-input" type="text" name="address" value="{{customer.address}}" required>
+        </div>
+
+        {{#if customer.passwordHash}}
+        <div class="form-group">
+          <label class="form-label">Current Password Hash</label>
+          <code class="pw-hash-display">{{customer.passwordHash}}</code>
+        </div>
+        {{/if}}
+
+        <div class="form-actions">
+          <a href="/staff/customers" class="btn-sm btn-edit">Cancel</a>
+          <button type="submit" class="btn-primary">{{#if customer}}Update Customer{{else}}Add Customer{{/if}}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
