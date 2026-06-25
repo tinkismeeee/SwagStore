@@ -3,11 +3,15 @@
     <span class="brand-icon">⬡</span>
     <span>SwagStore</span>
   </a>
+  <input type="checkbox" id="nav-toggle" class="nav-toggle">
+  <label for="nav-toggle" class="nav-hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </label>
   <div class="nav-links">
     <a href="/" class="nav-link">Shop</a>
     {{#if user}}
       <a href="/orders" class="nav-link">Orders</a>
-      <span class="nav-link">Hi, {{user.name}}</span>
+      <span class="nav-link nav-greeting">Hi, {{user.name}}</span>
       <a href="/logout" class="nav-link">Logout</a>
     {{else}}
       <a href="/login" class="nav-link">Login</a>
